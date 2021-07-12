@@ -30,7 +30,7 @@ async function verifyController(req, res) {
   const { verifyToken } = req.params;
   await verifyUserByEmail(verifyToken);
 
-  res.status(200).json({ status: 'verification success' });
+  res.status(200).json({ status: 'verification successful' });
 }
 
 module.exports = {

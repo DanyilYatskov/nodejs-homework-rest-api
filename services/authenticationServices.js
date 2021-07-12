@@ -15,7 +15,7 @@ async function registration(email, password) {
   try {
     await sendVerificationEmail(verifyToken, email);
   } catch (error) {
-    throw new ServiceUnavalaibleError('Service Unavalaible');
+    throw new ServiceUnavalaibleError('Service Unavalaible', error);
   }
 
   const newUser = new User({ email, password, verifyToken });
@@ -59,9 +59,7 @@ async function verifyUserByEmail(verifyToken) {
   const user = await User.findOne({ verifyToken });
 
   if (!user) {
-    throw new NotAuthorizedError(
-      'Your verification token is not valid. Contact with administration',
-    );
+    throw new NotAuthorizedError('User not found. Contact with administration');
   }
 
   await user.updateOne({ isVerified: true, verifyToken: null });
