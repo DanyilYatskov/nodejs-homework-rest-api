@@ -55,14 +55,16 @@ async function logout(userId) {
   console.log(data);
   return data;
 }
-async function verifyUserByEmail({ verifyToken }) {
+async function verifyUserByEmail(verifyToken) {
   const user = await User.findOne({ verifyToken });
 
-  if (user) {
-    await user.updateOne({ isVerified: true, verifyToken: null });
-    return true;
+  if (!user) {
+    throw new NotAuthorizedError(
+      'Your verification token is not valid. Contact with administration',
+    );
   }
-  return false;
+
+  await user.updateOne({ isVerified: true, verifyToken: null });
 }
 
 module.exports = {

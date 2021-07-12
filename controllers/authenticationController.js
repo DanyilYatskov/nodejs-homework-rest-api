@@ -2,6 +2,7 @@ const {
   registration,
   login,
   logout,
+  verifyUserByEmail,
 } = require('../services/authenticationServices');
 
 async function registrationController(req, res) {
@@ -25,8 +26,16 @@ async function logoutController(req, res) {
   res.status(200).json({ status: 'no content' });
 }
 
+async function verifyController(req, res) {
+  const { verifyToken } = req.params;
+  await verifyUserByEmail(verifyToken);
+
+  res.status(200).json({ status: 'verification success' });
+}
+
 module.exports = {
   registrationController,
   loginController,
   logoutController,
+  verifyController,
 };

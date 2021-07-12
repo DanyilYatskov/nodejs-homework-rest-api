@@ -19,7 +19,7 @@ function createVerificationEmailTemplate(verifyToken) {
         button: {
           color: '#22BC66', // Optional action button color
           text: 'Confirm your account',
-          link: `${serverURL}${verifyToken}`,
+          link: `${serverURL}api/users/verify/${verifyToken}`,
         },
       },
       outro:
