@@ -35,7 +35,7 @@ async function sendVerificationEmail(verifyToken, email) {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
     to: email, // Change to your recipient
-    from: 'noreply@rest-api.com', // Change to your verified sender
+    from: 'danila0502@gmail.com', // Change to your verified sender
     subject: 'Verification E-mail',
     html: emailBody,
   };

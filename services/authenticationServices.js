@@ -6,19 +6,22 @@ const { User } = require('../dataBase/usersModel');
 const {
   NotAuthorizedError,
   ServiceUnavalaibleError,
+  WrongParametersError,
 } = require('../helpers/errors');
 const { sendVerificationEmail } = require('./emailServices');
 const { updateToken } = require('./userService');
 
 async function registration(email, password) {
   const verifyToken = uuidv4();
+
   try {
     await sendVerificationEmail(verifyToken, email);
   } catch (error) {
-    throw new ServiceUnavalaibleError('Service Unavalaible', error);
+    throw new ServiceUnavalaibleError(error);
   }
 
   const newUser = new User({ email, password, verifyToken });
+
   await newUser.save();
   return newUser;
 }
@@ -46,7 +49,6 @@ async function login(email, password) {
 }
 
 async function logout(userId) {
-  console.log(userId);
   if (!userId) {
     throw new NotAuthorizedError('Not authorized. You need to be logged in!');
   }
@@ -65,9 +67,35 @@ async function verifyUserByEmail(verifyToken) {
   await user.updateOne({ isVerified: true, verifyToken: null });
 }
 
+async function resendVerificationEmail(email) {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new WrongParametersError(
+      'User not foud, wrong email or user already verified',
+    );
+  }
+
+  if (user.isVerified === true) {
+    throw new WrongParametersError('Verification has already been passed');
+  }
+
+  const verifyToken = uuidv4();
+
+  try {
+    await sendVerificationEmail(verifyToken, email);
+  } catch (error) {
+    throw new ServiceUnavalaibleError(error);
+  }
+
+  user.verifyToken = verifyToken;
+  user.save();
+}
+
 module.exports = {
   registration,
   login,
   logout,
   verifyUserByEmail,
+  resendVerificationEmail,
 };

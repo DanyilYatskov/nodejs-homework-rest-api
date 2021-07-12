@@ -8,6 +8,7 @@ const {
   loginController,
   logoutController,
   verifyController,
+  resendVerificationEmailController,
 } = require('../../controllers/authenticationController');
 
 const {
@@ -25,5 +26,7 @@ router.post(
 );
 
 router.get('/verify/:verifyToken', asyncWrapper(verifyController));
+
+router.post('/verify', asyncWrapper(resendVerificationEmailController));
 
 module.exports = { authRouter: router };
