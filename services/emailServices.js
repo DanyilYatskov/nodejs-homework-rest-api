@@ -3,7 +3,7 @@ const Mailgen = require('mailgen');
 
 const serverURL = `http://localhost:${process.env.PORT}/`;
 
-function createVarificationEmailTemplate(verifyToken, name) {
+function createVerificationEmailTemplate(verifyToken) {
   const mailGenerator = new Mailgen({
     theme: 'default',
     product: {
@@ -13,7 +13,6 @@ function createVarificationEmailTemplate(verifyToken, name) {
   });
   const template = {
     body: {
-      name,
       intro: 'Welcome to Rest-API!',
       action: {
         instructions: 'To get started with Rest-API, please click here:',
@@ -31,8 +30,8 @@ function createVarificationEmailTemplate(verifyToken, name) {
   return emailBody;
 }
 
-async function sendVarificationEmail(verifyToken, email, name) {
-  const emailBody = createVarificationEmailTemplate(verifyToken, name);
+async function sendVerificationEmail(verifyToken, email) {
+  const emailBody = createVerificationEmailTemplate(verifyToken);
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
     to: email, // Change to your recipient
@@ -43,4 +42,4 @@ async function sendVarificationEmail(verifyToken, email, name) {
   await sgMail.send(msg);
 }
 
-module.exports = { sendVarificationEmail };
+module.exports = { sendVerificationEmail };
