@@ -2,12 +2,12 @@
 
 POST: localhost:8083/api/users/signup
 
-PostMan screenshot: https://ibb.co/5cLVxn1
+PostMan screenshot: https://ibb.co/Y2hNCs7
 
-PATCH: localhost:8083/api/users/avatars
+GET: localhost:8083/api/users/verify/f8b88e4e-45b9-4836-8d0f-5ab4e5a24bf9
 
-PostMan screenshot: https://ibb.co/V9MSB3C
+PostMan screenshot: https://ibb.co/RBrx0rr
 
-URL : http://localhost:8083/avatars/5a7e9221-2b02-48de-a306-b9aae7c1210f.jpg
+POST : localhost:8083/api/users/verify/
 
-screenshot: https://ibb.co/rHmvjSX
+PostMan screenshot: https://ibb.co/nmjgr99
