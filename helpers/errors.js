@@ -26,9 +26,17 @@ class NotAuthorizedError extends restApi {
   }
 }
 
+class ServiceUnavalaibleError extends restApi {
+  constructor(message) {
+    super(message);
+    this.status = 503;
+  }
+}
+
 module.exports = {
   restApi,
   ValidationError,
   WrongParametersError,
   NotAuthorizedError,
+  ServiceUnavalaibleError,
 };

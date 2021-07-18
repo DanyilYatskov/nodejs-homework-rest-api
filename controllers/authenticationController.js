@@ -2,6 +2,8 @@ const {
   registration,
   login,
   logout,
+  verifyUserByEmail,
+  resendVerificationEmail,
 } = require('../services/authenticationServices');
 
 async function registrationController(req, res) {
@@ -25,8 +27,25 @@ async function logoutController(req, res) {
   res.status(200).json({ status: 'no content' });
 }
 
+async function verifyController(req, res) {
+  const { verifyToken } = req.params;
+  await verifyUserByEmail(verifyToken);
+
+  res.status(200).json({ status: 'verification successful' });
+}
+
+async function resendVerificationEmailController(req, res) {
+  const { email } = req.body;
+
+  await resendVerificationEmail(email);
+
+  res.status(200).json({ status: 'verification email sent' });
+}
+
 module.exports = {
   registrationController,
   loginController,
   logoutController,
+  verifyController,
+  resendVerificationEmailController,
 };
